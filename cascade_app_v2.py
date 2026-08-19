@@ -28,7 +28,7 @@ import json
 # Page config
 st.set_page_config(
     page_title="Project Cascade",
-    page_icon="📊",
+    page_icon="[CHART]",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -155,7 +155,7 @@ def section_summary():
     st.divider()
 
     # Section 1: Top Activated Nodes (Ranked by Signal Count & Severity)
-    st.subheader("🔴 Top Activated Cascade Nodes")
+    st.subheader("[CRITICAL] Top Activated Cascade Nodes")
     st.caption("Ranked by signal frequency and severity — nodes with greatest real-world activation")
 
     active_nodes = [n for n in nodes_by_activity if n['signal_count'] and n['signal_count'] > 0]
@@ -179,7 +179,7 @@ def section_summary():
     st.divider()
 
     # Section 2: Active CASCADE Sequences with Real-World Confirmations
-    st.subheader("🔗 Active CASCADE Sequences")
+    st.subheader("[LINK] Active CASCADE Sequences")
     st.caption("CASCADE pathways showing real-world activation — documented causal chains")
 
     if cascades_with_signals:
@@ -200,7 +200,7 @@ def section_summary():
     st.divider()
 
     # Section 3: Geographic Hotspots of Baseline Return Failures
-    st.subheader("🌍 Geographic Hotspots — Baseline Return Failure Expansion")
+    st.subheader("[WORLD] Geographic Hotspots — Baseline Return Failure Expansion")
     st.caption("Regions/sectors showing persistent inability to return to pre-disaster baseline")
 
     if hotspots:
@@ -221,7 +221,7 @@ def section_summary():
     st.divider()
 
     # Section 4: System Robustness Trajectory
-    st.subheader("📉 System Robustness Trajectory")
+    st.subheader("[DOWN] System Robustness Trajectory")
     st.caption("Degradation trend — is system adaptive capacity declining?")
 
     robustness_data = get_system_robustness_trajectory()
@@ -242,7 +242,7 @@ def section_summary():
     st.divider()
 
     # Section 5: Reference Points (System-Level Metrics)
-    st.subheader("📊 System-Level Reference Points")
+    st.subheader("[CHART] System-Level Reference Points")
     st.caption("Amplitude, Frequency, Interconnectedness, Underestimation, and Robustness metrics")
 
     if reference_points:
@@ -262,7 +262,7 @@ def section_summary():
     st.divider()
 
     # Section 6: Recent Signals (Last 20)
-    st.subheader("📌 Recent Signals (Last 20)")
+    st.subheader("[POINT] Recent Signals (Last 20)")
     st.caption("Latest cascade mechanism activations — ordered by date")
 
     signals = get_all_signals(limit=20)
@@ -280,14 +280,14 @@ def section_summary():
 # 2. TODAY'S PROGRESS
 # ============================================
 def section_today_progress():
-    st.header("📈 Today's Progress")
+    st.header("[UP] Today's Progress")
 
     today_str = datetime.now().strftime('%Y-%m-%d')
 
     # ============================================
     # SECTION 1: AUTO-GENERATED SYNTHESIS FROM ROUTINES
     # ============================================
-    st.subheader("🤖 Auto-Synthesized from 4 Daily Routines")
+    st.subheader("[AI] Auto-Synthesized from 4 Daily Routines")
 
     # Get today's signals and findings from routines
     all_signals = get_all_signals()
@@ -315,7 +315,7 @@ def section_today_progress():
         st.metric("Total in System", len(all_signals))
 
     if todays_signals:
-        with st.expander("📊 Today's Signals by Source", expanded=False):
+        with st.expander("[CHART] Today's Signals by Source", expanded=False):
             by_source = {}
             for s in todays_signals:
                 src = s['source']
@@ -326,11 +326,11 @@ def section_today_progress():
             for source, signals in sorted(by_source.items()):
                 st.markdown(f"**{source}** ({len(signals)} signals)")
                 for signal in signals:
-                    severity_color = {'critical': '🔴', 'serious': '🟠', 'warning': '🟡'}.get(signal['severity'], '⚪')
+                    severity_color = {'critical': '[CRITICAL]', 'serious': '[WARNING]', 'warning': '[CAUTION]'}.get(signal['severity'], '[NEUTRAL]')
                     st.caption(f"{severity_color} {signal['domain']}: {signal['description'][:100]}...")
 
     if todays_findings:
-        with st.expander("🔬 Today's Research Findings by Mechanism", expanded=False):
+        with st.expander("[ANALYSIS] Today's Research Findings by Mechanism", expanded=False):
             by_mech = {}
             for f in todays_findings:
                 mech = f['mechanism']
@@ -352,10 +352,10 @@ def section_today_progress():
     # ============================================
     # SECTION 2: MANUAL CAPTURE FROM CHAT/SESSIONS
     # ============================================
-    st.subheader("✍️ Add Finding from This Session")
+    st.subheader("[WRITE] Add Finding from This Session")
     st.caption("Capture theoretical advances, methodological insights, or key realizations from your work")
 
-    with st.expander("📝 Quick Capture Form", expanded=False):
+    with st.expander("[DOCUMENT] Quick Capture Form", expanded=False):
         col1, col2 = st.columns([2, 1])
 
         with col1:
@@ -380,7 +380,7 @@ def section_today_progress():
             key="new_insight"
         )
 
-        if st.button("💾 Save Finding", type="primary"):
+        if st.button("[SAVE] Save Finding", type="primary"):
             if new_finding.strip():
                 # Load existing daily findings
                 findings_data = get_daily_findings(today_str)
@@ -424,7 +424,7 @@ def section_today_progress():
     findings_data = get_daily_findings(today_str)
 
     if findings_data:
-        st.subheader("📋 Today's Complete Summary")
+        st.subheader("[LIST] Today's Complete Summary")
 
         # Overview
         if findings_data['overview']:
@@ -434,7 +434,7 @@ def section_today_progress():
         if findings_data['theoretical_advances']:
             advances_list = json.loads(findings_data['theoretical_advances'])
             if advances_list:
-                st.subheader("🧠 Theoretical Advances")
+                st.subheader("[MIND] Theoretical Advances")
                 for advance in advances_list:
                     st.markdown(f'<div class="highlight-recent">• <strong>{advance}</strong></div>', unsafe_allow_html=True)
 
@@ -442,11 +442,11 @@ def section_today_progress():
         if findings_data['methodological_insights']:
             insights_list = json.loads(findings_data['methodological_insights'])
             if insights_list:
-                st.subheader("🔧 Methodological Insights")
+                st.subheader("[CONFIG] Methodological Insights")
                 for insight in insights_list:
                     st.markdown(f"• {insight}")
 
-        st.caption(f"📝 Last updated: {findings_data['last_updated']}")
+        st.caption(f"[DOCUMENT] Last updated: {findings_data['last_updated']}")
     else:
         if not todays_signals and not todays_findings:
             st.info("No signals or findings matched today's date. Routines will populate this when they run.")
@@ -454,12 +454,12 @@ def section_today_progress():
             # Fallback: Show recent signals if date matching failed
             if all_signals:
                 st.divider()
-                st.subheader("📊 Recent Signals (Last 20) — Debug Fallback")
+                st.subheader("[CHART] Recent Signals (Last 20) — Debug Fallback")
                 st.caption("Showing recent data in case date format mismatched")
 
                 recent_signals = all_signals[:20]
                 for signal in recent_signals:
-                    severity_color = {'critical': '🔴', 'serious': '🟠', 'warning': '🟡'}.get(signal.get('severity'), '⚪')
+                    severity_color = {'critical': '[CRITICAL]', 'serious': '[WARNING]', 'warning': '[CAUTION]'}.get(signal.get('severity'), '[NEUTRAL]')
                     date_recorded = signal.get('date_recorded', 'unknown')
                     st.caption(f"{severity_color} [{date_recorded}] {signal.get('domain', 'Unknown')}: {signal.get('description', '')[:100]}...")
 
@@ -469,7 +469,7 @@ def section_today_progress():
 # 3. AMPLITUDE (formerly 4)
 # ============================================
 def section_amplitude():
-    st.header("⚡ Amplitude Watch Log")
+    st.header("[CRITICAL] Amplitude Watch Log")
 
     st.markdown("""
     **Tracks whether individual cascade mechanisms are escalating in scale, severity, or impact.**
@@ -506,7 +506,7 @@ def section_amplitude():
         st.divider()
 
         # Amplitude visualization
-        st.subheader("📈 Current Amplitude Levels by Status")
+        st.subheader("[UP] Current Amplitude Levels by Status")
 
         viz_data = []
         for e in amp_entries:
@@ -537,7 +537,7 @@ def section_amplitude():
         st.divider()
 
         # Detailed watch log entries
-        st.subheader("🔍 Detailed Amplitude Watch Entries")
+        st.subheader("[SEARCH] Detailed Amplitude Watch Entries")
 
         # Group by status for better organization
         statuses = ['ACCELERATING', 'STRUCTURAL', 'EMERGING', 'MODERATE', 'MONITORING']
@@ -592,7 +592,7 @@ def section_amplitude():
 # 5. CASCADING NODES VISUALIZING
 # ============================================
 def section_cascading_nodes():
-    st.header("🔗 Cascading Nodes Visualizing")
+    st.header("[LINK] Cascading Nodes Visualizing")
 
     st.subheader("CASCADE Sequences")
 
@@ -651,7 +651,7 @@ def section_cascading_nodes():
 # 6. SYSTEMATIC UNDERESTIMATION
 # ============================================
 def section_systematic_underestimation():
-    st.header("⚠️ Systematic Underestimation")
+    st.header("[WARNING] Systematic Underestimation")
 
     st.subheader("Definition")
     st.markdown("""
@@ -693,7 +693,7 @@ def section_systematic_underestimation():
 
             # Display critical findings
             if critical_findings:
-                st.subheader("🔴 Critical Underestimations")
+                st.subheader("[CRITICAL] Critical Underestimations")
                 for finding in critical_findings:
                     with st.container(border=True):
                         col1, col2 = st.columns([0.85, 0.15])
@@ -712,7 +712,7 @@ def section_systematic_underestimation():
 
             # Display serious findings
             if serious_findings:
-                st.subheader("🟠 Serious Underestimations")
+                st.subheader("[WARNING] Serious Underestimations")
                 for finding in serious_findings:
                     with st.container(border=True):
                         col1, col2 = st.columns([0.85, 0.15])
@@ -731,7 +731,7 @@ def section_systematic_underestimation():
 
             # Display moderate findings
             if moderate_findings:
-                with st.expander(f"🟡 Moderate Underestimations ({len(moderate_findings)})"):
+                with st.expander(f"[CAUTION] Moderate Underestimations ({len(moderate_findings)})"):
                     for finding in moderate_findings:
                         with st.container(border=True):
                             st.markdown(f"**{finding['domain'].title()}** — {finding['category'].title()}")
@@ -751,7 +751,7 @@ def section_systematic_underestimation():
 # 7. GRANULARITY
 # ============================================
 def section_granularity():
-    st.header("🔬 Granularity")
+    st.header("[ANALYSIS] Granularity")
 
     st.subheader("Signal Detail Breakdown")
 
@@ -805,7 +805,7 @@ def section_granularity():
 # 8. APPENDIX
 # ============================================
 def section_appendix():
-    st.header("📚 Appendix")
+    st.header("[LIBRARY] Appendix")
 
     st.subheader("Baseline Return Failures")
 
@@ -845,7 +845,7 @@ def section_appendix():
 # 9. SYSTEM MECHANISM TRACKER
 # ============================================
 def section_system_mechanism_tracker():
-    st.header("🔬 System Mechanism Tracker")
+    st.header("[ANALYSIS] System Mechanism Tracker")
     st.markdown("Distributed Adaptation Network & Baseline Return Failure Analysis")
 
     # Get data
@@ -1074,7 +1074,7 @@ def section_system_mechanism_tracker():
 # 10. PROJECT GOALS
 # ============================================
 def section_project_goals():
-    st.header("🎯 Project Goals & Objectives")
+    st.header("[TARGET] Project Goals & Objectives")
 
     # Primary mission statement
     st.markdown("""
@@ -1135,11 +1135,11 @@ def section_project_goals():
                     """, unsafe_allow_html=True)
 
                 with col2:
-                    if st.button("✏️", key=f"edit_{goal['goal_id']}", help="Edit goal"):
+                    if st.button("[EDIT]", key=f"edit_{goal['goal_id']}", help="Edit goal"):
                         st.session_state.edit_goal_id = goal['goal_id']
 
                 with col3:
-                    if st.button("🗑️", key=f"retire_{goal['goal_id']}", help="Retire goal"):
+                    if st.button("[DELETE]", key=f"retire_{goal['goal_id']}", help="Retire goal"):
                         retire_goal(goal['goal_id'], notes=f"Retired on {datetime.now().strftime('%Y-%m-%d')}")
                         st.rerun()
 
@@ -1167,14 +1167,14 @@ def section_project_goals():
 
                     col1, col2 = st.columns(2)
                     with col1:
-                        if st.button("💾 Save Changes"):
+                        if st.button("[SAVE] Save Changes"):
                             update_goal(st.session_state.edit_goal_id, edited_text, edited_category)
                             del st.session_state.edit_goal_id
                             st.success("Goal updated!")
                             st.rerun()
 
                     with col2:
-                        if st.button("❌ Cancel"):
+                        if st.button("[FAILED] Cancel"):
                             del st.session_state.edit_goal_id
                             st.rerun()
         else:
@@ -1199,7 +1199,7 @@ def section_project_goals():
                     """, unsafe_allow_html=True)
 
                 with col2:
-                    if st.button("↩️", key=f"reactivate_{goal['goal_id']}", help="Reactivate goal"):
+                    if st.button("[REACTIVATE]", key=f"reactivate_{goal['goal_id']}", help="Reactivate goal"):
                         activate_goal(goal['goal_id'])
                         st.success("Goal reactivated!")
                         st.rerun()
@@ -1222,7 +1222,7 @@ def section_project_goals():
             key="new_goal_category"
         )
 
-        if st.button("➕ Add Goal", type="primary"):
+        if st.button("[ADD] Add Goal", type="primary"):
             if new_goal_text.strip():
                 add_goal(new_goal_text, new_category)
                 st.success("Goal added successfully!")
@@ -1245,14 +1245,14 @@ def section_project_goals():
 # 9. RESEARCH FINDINGS
 # ============================================
 def section_findings():
-    st.header("🔬 Research Findings — Mechanisms and Evidence")
+    st.header("[ANALYSIS] Research Findings — Mechanisms and Evidence")
 
     # HEADLINE: Core finding first
     st.markdown("**Global recovery capacity is severely constrained. The intervention window is closing.**")
     st.markdown("---")
 
     # Project summary - global focus, under 100 words
-    st.subheader("📖 Synthesis & Key Insights")
+    st.subheader("[REFERENCE] Synthesis & Key Insights")
     st.markdown("**Global Cascade Crisis**: Eight interconnected failure mechanisms are destabilizing planetary systems. Critical thresholds crossed:")
     st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;• **Water Scarcity** — Lake Powell/Mead at record lows; regional aquifers depleting")
     st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;• **Energy Infrastructure Vulnerability** — 128-week transformer lead times; 75% of equipment past service life")
@@ -1266,7 +1266,7 @@ def section_findings():
     st.markdown("---")
 
     # Regional summaries
-    st.subheader("🌍 Regional Vulnerability Profiles")
+    st.subheader("[WORLD] Regional Vulnerability Profiles")
 
     col1, col2 = st.columns(2)
 
@@ -1323,7 +1323,7 @@ def section_findings():
     project_findings = [f for f in all_findings if f['date_discovered'] != today_str]
 
     if project_findings:
-        st.subheader("📖 Synthesis & Key Insights")
+        st.subheader("[REFERENCE] Synthesis & Key Insights")
 
         # Organize findings by mechanism for narrative
         by_mechanism = {}
@@ -1396,7 +1396,7 @@ def section_findings():
     st.markdown("---")
 
     # Mechanism breakdown
-    st.subheader("📊 Findings by Mechanism")
+    st.subheader("[CHART] Findings by Mechanism")
 
     # Filter mechanisms data to exclude today's findings
     if project_findings:
@@ -1463,13 +1463,13 @@ def section_findings():
     st.markdown("---")
 
     # Detailed findings by mechanism (project arc, excluding today)
-    st.subheader("📋 Findings Details (Project to-Date)")
+    st.subheader("[LIST] Findings Details (Project to-Date)")
 
 # ============================================
 # 2. SYSTEM DYNAMICS
 # ============================================
 def section_system_dynamics():
-    st.header("🌍 Global Critical Infrastructure Cascade Dynamics")
+    st.header("[WORLD] Global Critical Infrastructure Cascade Dynamics")
 
     st.markdown("""
     How failures in one critical system trigger cascades across regions and sectors.
@@ -1477,7 +1477,7 @@ def section_system_dynamics():
     structure, climate vulnerability, and infrastructure interdependencies.
     """)
 
-    st.subheader("🔗 Regional Cascade Pathways")
+    st.subheader("[LINK] Regional Cascade Pathways")
 
     st.markdown("""
     Critical infrastructure systems are tightly coupled globally. A failure in one region's
@@ -1528,7 +1528,7 @@ def section_system_dynamics():
     st.divider()
 
     # SECTION 1: Global System Interdependencies
-    st.subheader("📅 Timescale Variation by Region and System")
+    st.subheader("[DATE] Timescale Variation by Region and System")
 
     st.markdown("""
     Different critical systems fail at different timescales. The cascade effect means that
@@ -1564,7 +1564,7 @@ def section_system_dynamics():
     st.divider()
 
     # SECTION 2: Global System Interdependencies
-    st.subheader("🌐 Global System Coupling & Interdependencies")
+    st.subheader("[GLOBAL] Global System Coupling & Interdependencies")
 
     st.markdown("""
     Critical systems are tightly coupled globally through:
@@ -1574,7 +1574,7 @@ def section_system_dynamics():
     - **Climate dependency:** Monsoons, droughts, extreme weather trigger regional failures with global ripple effects
     """)
 
-    st.subheader("📍 Example Cascade Paths")
+    st.subheader("[POINT] Example Cascade Paths")
 
     cascade_examples = [
         {
@@ -1615,7 +1615,7 @@ def section_system_dynamics():
     st.divider()
 
     # SECTION 3: Asymmetric Timescales
-    st.subheader("⏱️ The Asymmetry Problem: Destruction vs. Reconstruction")
+    st.subheader("[TIME] The Asymmetry Problem: Destruction vs. Reconstruction")
 
     st.markdown("""
     The most dangerous insight: it takes 20 minutes to destroy what takes 18+ months to rebuild.
@@ -1673,7 +1673,7 @@ def section_system_dynamics():
 # 3. THREAT LANDSCAPE
 # ============================================
 def section_threat_landscape():
-    st.header("🎯 Geopolitical Threats to Global Critical Infrastructure")
+    st.header("[TARGET] Geopolitical Threats to Global Critical Infrastructure")
 
     st.markdown("""
     Critical infrastructure globally is not just vulnerable to natural disasters or accidents.
@@ -1682,36 +1682,36 @@ def section_threat_landscape():
     """)
 
     # STATE ACTOR THREATS
-    st.subheader("🌐 State Actor Threats by Region & Target System")
+    st.subheader("[GLOBAL] State Actor Threats by Region & Target System")
 
     threats = [
         {
-            'country': '🇨🇳 China',
+            'country': '[CHINA] China',
             'targets': ['US electrical grid', 'Semiconductor supply chains', 'South Asian water systems', 'African infrastructure'],
             'capability': 'Software backdoors in transformers; supply chain manipulation; cyber reconnaissance',
             'intent': 'Reduce US technological advantage; secure resource access; undermine rival infrastructure',
-            'threat_level': '🔴 CRITICAL'
+            'threat_level': '[CRITICAL] CRITICAL'
         },
         {
-            'country': '🇷🇺 Russia',
+            'country': '[RUSSIA] Russia',
             'targets': ['European electrical grid', 'European energy systems', 'Global grain/fertilizer systems', 'NATO infrastructure'],
             'capability': 'Demonstrated cyber attacks on electrical systems; energy weaponization; supply chain control',
             'intent': 'Destabilize Europe economically; secure energy leverage; disrupt supply chains',
-            'threat_level': '🔴 CRITICAL'
+            'threat_level': '[CRITICAL] CRITICAL'
         },
         {
-            'country': '🇮🇷 Iran',
+            'country': '[IRAN] Iran',
             'targets': ['Middle East water systems', 'Regional electrical grids', 'Global energy markets', 'Regional rivals'],
             'capability': 'Water system sabotage; cyber operations; asymmetric tactics',
             'intent': 'Regional dominance; destabilization of rivals; resilience building',
-            'threat_level': '🔴 CRITICAL'
+            'threat_level': '[CRITICAL] CRITICAL'
         },
         {
-            'country': '🇰🇵 North Korea',
+            'country': '[NORTH_KOREA] North Korea',
             'targets': ['Financial systems', 'Critical infrastructure cyber access', 'Energy/food systems'],
             'capability': 'Sophisticated cyber operations; supply chain infiltration; asymmetric tactics',
             'intent': 'Sanctions evasion; economic disruption; regime survival',
-            'threat_level': '🟠 SERIOUS'
+            'threat_level': '[WARNING] SERIOUS'
         },
     ]
 
@@ -1728,7 +1728,7 @@ def section_threat_landscape():
             st.divider()
 
     # METCALF AS OPERATIONAL TEMPLATE
-    st.subheader("⚔️ Metcalf Attack: Operational Template for Extremists")
+    st.subheader("[CONFLICT] Metcalf Attack: Operational Template for Extremists")
 
     st.markdown("""
     The 2013 Metcalf substation attack proved the concept. It has since become
@@ -1767,7 +1767,7 @@ def section_threat_landscape():
     """)
 
     # TIMELINE OF INCIDENTS
-    st.subheader("📅 Timeline of Known Attacks & Threats")
+    st.subheader("[DATE] Timeline of Known Attacks & Threats")
 
     incidents = [
         {'date': 'April 16, 2013', 'incident': 'Metcalf substation attack — 17 transformers disabled', 'actor': 'Unknown (likely domestic extremists)', 'impact': 'Proof of concept'},
@@ -1790,7 +1790,7 @@ def section_threat_landscape():
             st.divider()
 
     # THREAT ASSESSMENT
-    st.subheader("🚨 Risk Assessment")
+    st.subheader("[ALERT] Risk Assessment")
 
     risk_factors = [
         ("Known operational capability", "Metcalf proved the attack is executable with 2 trained operatives"),
@@ -1815,7 +1815,7 @@ def section_threat_landscape():
 # 4. SUPPLY CHAIN CONSTRAINTS
 # ============================================
 def section_supply_chain_constraints():
-    st.header("🌍 Global Supply Chain Fragility — Critical Bottlenecks")
+    st.header("[WORLD] Global Supply Chain Fragility — Critical Bottlenecks")
 
     st.markdown("""
     Global critical systems depend on concentrated supply chains that cannot surge production
@@ -1824,7 +1824,7 @@ def section_supply_chain_constraints():
     """)
 
     # SYSTEM 1: SEMICONDUCTORS
-    st.subheader("🖥️ Bottleneck 1: Semiconductor Production — Taiwan Concentration")
+    st.subheader("[SYSTEM] Bottleneck 1: Semiconductor Production — Taiwan Concentration")
 
     col1, col2 = st.columns([2, 1])
     with col1:
@@ -1858,7 +1858,7 @@ def section_supply_chain_constraints():
     st.divider()
 
     # SYSTEM 2: FERTILIZER
-    st.subheader("🌾 Bottleneck 2: Fertilizer Production — Energy & Geography Dependent")
+    st.subheader("[AGRICULTURE] Bottleneck 2: Fertilizer Production — Energy & Geography Dependent")
 
     col1, col2 = st.columns([2, 1])
     with col1:
@@ -1892,7 +1892,7 @@ def section_supply_chain_constraints():
     st.divider()
 
     # SYSTEM 3: RARE EARTHS
-    st.subheader("⚡ Bottleneck 3: Rare Earth Elements — China Dominance")
+    st.subheader("[CRITICAL] Bottleneck 3: Rare Earth Elements — China Dominance")
 
     col1, col2 = st.columns([2, 1])
     with col1:
@@ -1926,7 +1926,7 @@ def section_supply_chain_constraints():
     st.divider()
 
     # SYNTHESIS
-    st.subheader("🌍 Structural Supply Chain Fragility")
+    st.subheader("[WORLD] Structural Supply Chain Fragility")
 
     st.markdown("""
     **Pattern:** Critical systems all depend on geographically concentrated, politically vulnerable supply chains
@@ -1963,7 +1963,7 @@ def section_supply_chain_constraints():
 # 5. SOLUTIONS & TECHNOLOGY HORIZON
 # ============================================
 def section_solutions_horizon():
-    st.header("🔮 Technology Deployment & Regional Variance")
+    st.header("[PREDICTION] Technology Deployment & Regional Variance")
 
     st.markdown("""
     Promising solutions exist, but deployment timelines vary dramatically by region and technology type.
@@ -1971,7 +1971,7 @@ def section_solutions_horizon():
     lag years behind. This creates new asymmetries: Rich regions solve their problems; poor regions don't.
     """)
 
-    st.subheader("🕐 The Timing Problem — Solution vs. Crisis")
+    st.subheader("[TIME] The Timing Problem — Solution vs. Crisis")
 
     st.markdown("""
     **Crisis Timeline:** Hours to days (geopolitical shocks, cyber attacks, natural disasters)
@@ -1984,7 +1984,7 @@ def section_solutions_horizon():
     st.divider()
 
     # SOLUTIONS BY REGION
-    st.subheader("🌍 Technology Deployment by Region (2026-2034)")
+    st.subheader("[WORLD] Technology Deployment by Region (2026-2034)")
 
     region_solutions = {
         'North America': {
@@ -1992,28 +1992,28 @@ def section_solutions_horizon():
             'renewable': 'Wind/solar fast deployment; 2027 ~30% capacity',
             'sst': '2034+ deployment starting',
             'water': 'Desalination tech available; capital-constrained',
-            'overall': '🟡 Moderate—capital available but supply chain delays'
+            'overall': '[CAUTION] Moderate—capital available but supply chain delays'
         },
         'Europe': {
             'battery': 'Fast deployment; doubling 2025-27',
             'renewable': 'Aggressive targets; 2027 ~40% capacity',
             'sst': '2032+ deployment (earlier than US)',
             'water': 'Already investing; tech solutions available',
-            'overall': '🟢 Good—policy coordination, capital available'
+            'overall': '[GOOD] Good—policy coordination, capital available'
         },
         'Asia-Pacific': {
             'battery': 'China leading; variable others (2028+)',
             'renewable': 'China fast (40%+), India moderate, others slow',
             'sst': '2035+ (China may lead)',
             'water': 'Monsoon-dependent; tech lag; minimal deployment',
-            'overall': '🟡 Mixed—China advances, others lag'
+            'overall': '[CAUTION] Mixed—China advances, others lag'
         },
         'Sub-Saharan Africa': {
             'battery': 'Minimal deployment; 2035+ likely',
             'renewable': 'Solar potential high; capital gap severe',
             'sst': '2040+ or never (import-dependent)',
             'water': 'Desalination unaffordable; groundwater depleting',
-            'overall': '🔴 Poor—capital gap, tech lag, climate stress'
+            'overall': '[CRITICAL] Poor—capital gap, tech lag, climate stress'
         }
     }
 
@@ -2038,7 +2038,7 @@ def section_solutions_horizon():
     st.divider()
 
     # SYNTHESIS: TECHNOLOGY VS CRISIS TIMELINE
-    st.subheader("📈 Technology Availability vs. Crisis Acceleration")
+    st.subheader("[UP] Technology Availability vs. Crisis Acceleration")
 
     timeline_viz = {
         'Year': ['2026', '2027', '2028', '2029', '2030', '2031', '2032', '2033', '2034+'],
@@ -2057,11 +2057,11 @@ def section_solutions_horizon():
         st.markdown("**Crisis Risk**")
         for risk in timeline_viz['Crisis Risk Level']:
             if 'Critical' in risk:
-                st.markdown(f"🔴 **{risk}**")
+                st.markdown(f"[CRITICAL] **{risk}**")
             elif 'Very High' in risk:
-                st.markdown(f"🟠 **{risk}**")
+                st.markdown(f"[WARNING] **{risk}**")
             else:
-                st.markdown(f"🟡 **{risk}**")
+                st.markdown(f"[CAUTION] **{risk}**")
 
     with col3:
         st.markdown("**SST Readiness**")
@@ -2087,7 +2087,7 @@ def section_solutions_horizon():
 # 6. STRATEGIC BLIND SPOTS
 # ============================================
 def section_strategic_blind_spots():
-    st.header("🕵️ Global Measurement Blindness & Systemic Unknowns")
+    st.header("[DETECTIVE] Global Measurement Blindness & Systemic Unknowns")
 
     st.markdown("""
     No region has comprehensive visibility into its own critical infrastructure status or
@@ -2095,7 +2095,7 @@ def section_strategic_blind_spots():
     are the most vulnerable to cascade failure. This creates strategic vulnerability at global scale.
     """)
 
-    st.subheader("📊 What We Cannot See Globally")
+    st.subheader("[CHART] What We Cannot See Globally")
 
     unknowns = [
         {
@@ -2129,7 +2129,7 @@ def section_strategic_blind_spots():
         with st.container():
             st.markdown(f"**{unknown['category']}**")
             st.markdown(f"_Blind Spot:_ {unknown['blind_spot']}")
-            st.caption(f"📍 {unknown['implication']}")
+            st.caption(f"[POINT] {unknown['implication']}")
             st.divider()
 
     st.warning("""
@@ -2142,7 +2142,7 @@ def section_strategic_blind_spots():
     flying blind about what they have already found.
     """)
 
-    st.subheader("🔄 The Asymmetry of Information")
+    st.subheader("[REFRESH] The Asymmetry of Information")
 
     col1, col2 = st.columns(2)
 
@@ -2173,7 +2173,7 @@ def section_strategic_blind_spots():
 # 7. GLOBAL INFRASTRUCTURE WATCH
 # ============================================
 def section_global_infrastructure_watch():
-    st.header("📡 Global Critical Infrastructure Watch")
+    st.header("[BROADCAST] Global Critical Infrastructure Watch")
 
     st.markdown("""
     Real-time monitoring of critical infrastructure developments globally with cascade implications.
@@ -2181,14 +2181,14 @@ def section_global_infrastructure_watch():
     and critical materials that affect cascade risk.
     """)
 
-    st.subheader("⚡ Electrical Grid Status by Region")
+    st.subheader("[CRITICAL] Electrical Grid Status by Region")
 
     grid_status = {
         'Region': ['North America', 'Europe', 'Asia-Pacific', 'Sub-Saharan Africa'],
         'Grid Age': ['38-40 years (aging)', 'Post-war infrastructure', 'Mixed (new-old)', 'Limited/fragmented'],
         'Transformer Capacity': ['120-week lead times', '100-week lead times', '150+ week lead times', 'Chronic shortage'],
         'Recent Incidents': ['Moore County 2022', 'Occasional attacks', 'Natural disasters', 'Infrastructure failure'],
-        'Threat Level': ['🟠 High', '🟠 High', '🔴 Critical', '🔴 Critical'],
+        'Threat Level': ['[WARNING] High', '[WARNING] High', '[CRITICAL] Critical', '[CRITICAL] Critical'],
     }
 
     for i, region in enumerate(grid_status['Region']):
@@ -2205,12 +2205,12 @@ def section_global_infrastructure_watch():
             st.markdown(grid_status['Threat Level'][i])
         st.divider()
 
-    st.subheader("💧 Water System Status by Region")
+    st.subheader("[WATER] Water System Status by Region")
 
     water_status = {
         'Region': ['North America', 'Europe', 'South Asia', 'Sub-Saharan Africa'],
         'Status': ['Colorado River critically low; Great Lakes stable', 'Abundant but aging infrastructure', 'Monsoon-dependent; aquifer depletion', 'Severe drought (Lake Chad, etc.)'],
-        'Vulnerability': ['🟡 High drought risk', '🟢 Moderate (reserves available)', '🔴 Very high (60M+ at risk)', '🔴 Critical (humanitarian)'],
+        'Vulnerability': ['[CAUTION] High drought risk', '[GOOD] Moderate (reserves available)', '[CRITICAL] Very high (60M+ at risk)', '[CRITICAL] Critical (humanitarian)'],
         'Trend': ['Worsening', 'Stable', 'Degrading', 'Degrading fast'],
     }
 
@@ -2226,7 +2226,7 @@ def section_global_infrastructure_watch():
             st.markdown(f"_{water_status['Trend'][i]}_")
         st.divider()
 
-    st.subheader("🌾 Food & Agriculture System Status")
+    st.subheader("[AGRICULTURE] Food & Agriculture System Status")
 
     st.markdown("""
     **Global Grain Stocks:** 2 months coverage (historically 3+ months)
@@ -2239,7 +2239,7 @@ def section_global_infrastructure_watch():
 
     st.divider()
 
-    st.subheader("🖥️ Semiconductor & Critical Materials Status")
+    st.subheader("[SYSTEM] Semiconductor & Critical Materials Status")
 
     st.markdown("""
     **Semiconductors:** Taiwan production 92%; geopolitical risk HIGH
@@ -2256,7 +2256,7 @@ def section_global_infrastructure_watch():
 
     st.divider()
 
-    st.subheader("🚨 Escalation Indicators (Watching These Metrics)")
+    st.subheader("[ALERT] Escalation Indicators (Watching These Metrics)")
 
     st.markdown("""
     **Electrical Grid Metrics:**
@@ -2306,7 +2306,7 @@ def section_global_infrastructure_watch():
 
         # Display critical confidence findings
         if critical_conf:
-            st.subheader("🟢 High Confidence (≥85%)")
+            st.subheader("[GOOD] High Confidence (≥85%)")
             for finding in critical_conf:
                 with st.container():
                     col1, col2 = st.columns([3, 1])
@@ -2316,12 +2316,12 @@ def section_global_infrastructure_watch():
                     with col2:
                         st.metric("Confidence", f"{finding['confidence_level']:.0%}")
                     if finding['supporting_evidence']:
-                        st.caption(f"📍 Evidence: {finding['supporting_evidence']}")
+                        st.caption(f"[POINT] Evidence: {finding['supporting_evidence']}")
                     st.divider()
 
         # Display high confidence findings
         if high_conf:
-            with st.expander(f"🟡 Moderate-High Confidence (75-85%)", expanded=False):
+            with st.expander(f"[CAUTION] Moderate-High Confidence (75-85%)", expanded=False):
                 for finding in high_conf:
                     col1, col2 = st.columns([3, 1])
                     with col1:
@@ -2330,12 +2330,12 @@ def section_global_infrastructure_watch():
                     with col2:
                         st.metric("Confidence", f"{finding['confidence_level']:.0%}")
                     if finding['supporting_evidence']:
-                        st.caption(f"📍 Evidence: {finding['supporting_evidence']}")
+                        st.caption(f"[POINT] Evidence: {finding['supporting_evidence']}")
                     st.divider()
 
         # Display moderate confidence findings
         if moderate_conf:
-            with st.expander(f"🔵 Emerging Findings (<75%)", expanded=False):
+            with st.expander(f"[INFO] Emerging Findings (<75%)", expanded=False):
                 for finding in moderate_conf:
                     col1, col2 = st.columns([3, 1])
                     with col1:
@@ -2344,7 +2344,7 @@ def section_global_infrastructure_watch():
                     with col2:
                         st.metric("Confidence", f"{finding['confidence_level']:.0%}")
                     if finding['supporting_evidence']:
-                        st.caption(f"📍 Evidence: {finding['supporting_evidence']}")
+                        st.caption(f"[POINT] Evidence: {finding['supporting_evidence']}")
                     st.divider()
     else:
         st.info("No findings available for selected mechanism.")
@@ -2352,7 +2352,7 @@ def section_global_infrastructure_watch():
     st.markdown("---")
 
     # Confidence distribution chart
-    st.subheader("📈 Confidence Distribution")
+    st.subheader("[UP] Confidence Distribution")
 
     if findings:
         confidence_data = {
@@ -2379,7 +2379,7 @@ def section_global_infrastructure_watch():
         st.plotly_chart(fig_dist)
 
         # Timeline of discoveries
-        st.subheader("📅 Findings Timeline")
+        st.subheader("[DATE] Findings Timeline")
 
         findings_sorted = sorted(findings, key=lambda x: x['date_discovered'])
         timeline_df = pd.DataFrame({
@@ -2420,14 +2420,14 @@ def section_global_infrastructure_watch():
 # 8. POLICY GAP ANALYSIS
 # ============================================
 def section_policy_gap_analysis():
-    st.header("📊 Gap Analysis: Response vs. Crisis Reality")
+    st.header("[CHART] Gap Analysis: Response vs. Crisis Reality")
 
     st.markdown("""
     **Core Problem:** Current policy responses are structurally insufficient to address cascade risks.
     The gap between response timescales and crisis timescales is unbridgeable by current mechanisms.
     """)
 
-    st.subheader("🛡️ Policy Responses Attempted")
+    st.subheader("[SHIELD] Policy Responses Attempted")
 
     responses = [
         {
@@ -2435,28 +2435,28 @@ def section_policy_gap_analysis():
             'action': 'Invoked twice to accelerate transformer production',
             'outcome': 'Minimal effect on lead times',
             'timeline_impact': '128 weeks → 120 weeks (8-week reduction only)',
-            'assessment': '🔴 Ineffective'
+            'assessment': '[CRITICAL] Ineffective'
         },
         {
             'policy': 'Tax Credits (Inflation Reduction Act)',
             'action': 'Encouraged factory expansion (Siemens, ABB)',
             'outcome': 'Factories planned but still 3-5 years to build',
             'timeline_impact': 'New capacity available 2028-2030',
-            'assessment': '🟡 Too late'
+            'assessment': '[CAUTION] Too late'
         },
         {
             'policy': 'Voluntary Equipment-Sharing Program',
             'action': 'Utilities encouraged to share spare transformers',
             'outcome': 'Useless (each transformer is unique/bespoke)',
             'timeline_impact': 'Zero impact',
-            'assessment': '🔴 Irrelevant'
+            'assessment': '[CRITICAL] Irrelevant'
         },
         {
             'policy': 'GridEx War Games',
             'action': 'Simulation-based preparedness exercises',
             'outcome': 'Optional participation; no binding outcomes',
             'timeline_impact': 'No operational readiness improvement',
-            'assessment': '🔴 Voluntary/toothless'
+            'assessment': '[CRITICAL] Voluntary/toothless'
         }
     ]
 
@@ -2474,7 +2474,7 @@ def section_policy_gap_analysis():
             st.markdown(response['assessment'])
         st.divider()
 
-    st.subheader("❌ Why These Responses Are Insufficient")
+    st.subheader("[FAILED] Why These Responses Are Insufficient")
 
     reasons = [
         {
@@ -2511,20 +2511,20 @@ def section_policy_gap_analysis():
         """)
         st.divider()
 
-    st.subheader("⏱️ Timescale Comparison")
+    st.subheader("[TIME] Timescale Comparison")
 
     st.markdown("""
     | Event | Timeline | Policy Response Possible? |
     |-------|----------|---------------------------|
-    | **Attack on substations** | 0-20 minutes | ❌ No (already happened) |
-    | **Water treatment failure** | 6-12 hours | ❌ No (happens during DPA review) |
-    | **Fuel delivery collapses** | 24-48 hours | ❌ No (hospitals still online but vulnerable) |
-    | **Food distribution fails** | 3-7 days | ⚠️ Emergency orders only (insufficient scale) |
-    | **Supply chains freeze** | 1-4 weeks | ⚠️ International coordination impossible |
-    | **Transformer replacement** | 12-18+ months | ✓ Only after crisis + recovery window |
+    | **Attack on substations** | 0-20 minutes | [FAILED] No (already happened) |
+    | **Water treatment failure** | 6-12 hours | [FAILED] No (happens during DPA review) |
+    | **Fuel delivery collapses** | 24-48 hours | [FAILED] No (hospitals still online but vulnerable) |
+    | **Food distribution fails** | 3-7 days | [WARNING] Emergency orders only (insufficient scale) |
+    | **Supply chains freeze** | 1-4 weeks | [WARNING] International coordination impossible |
+    | **Transformer replacement** | 12-18+ months | [YES] Only after crisis + recovery window |
     """)
 
-    st.subheader("🚨 The Real Constraint: Adaptation Speed")
+    st.subheader("[ALERT] The Real Constraint: Adaptation Speed")
 
     st.markdown("""
     **Institutional learning lag:** Each major event teaches us something, but adversaries learn faster.
@@ -2543,7 +2543,7 @@ def section_policy_gap_analysis():
 # 9. BIFURCATION POINT DIAGRAM
 # ============================================
 def section_bifurcation_point():
-    st.header("🔀 Bifurcation Point: Two Diverging System Paths")
+    st.header("[SHUFFLE] Bifurcation Point: Two Diverging System Paths")
 
     st.markdown("""
     **Strategic Context:** Global critical infrastructure systems are approaching a bifurcation point—
@@ -2552,7 +2552,7 @@ def section_bifurcation_point():
     One path leads to managed degradation; the other to systemic collapse with no recovery pathway.
     """)
 
-    st.subheader("📍 Evidence for Bifurcation")
+    st.subheader("[POINT] Evidence for Bifurcation")
 
     st.markdown("""
     **Threshold 1: Transformer Age Distribution (75% past service life)**
@@ -2571,7 +2571,7 @@ def section_bifurcation_point():
     - This system has lost slack; no room for error
     """)
 
-    st.subheader("🎯 The Bifurcation Scenario")
+    st.subheader("[TARGET] The Bifurcation Scenario")
 
     # Create a visual representation of the two paths
     col1, col2 = st.columns(2)
@@ -2594,10 +2594,10 @@ def section_bifurcation_point():
         - Outcome: Functioning but constrained system
 
         **Requirements:**
-        - ✓ Proactive hardening 2026-2028
-        - ✓ Surge investment in alternatives (renewables, battery, SST)
-        - ✓ International coordination mechanisms
-        - ✓ Fair distribution of recovery capacity
+        - [YES] Proactive hardening 2026-2028
+        - [YES] Surge investment in alternatives (renewables, battery, SST)
+        - [YES] International coordination mechanisms
+        - [YES] Fair distribution of recovery capacity
         """)
 
     with col2:
@@ -2620,15 +2620,15 @@ def section_bifurcation_point():
         - Outcome: No recovery pathway; system stuck offline
 
         **Why recovery fails:**
-        - ❌ Transformer replacement requires power (can't manufacture offline)
-        - ❌ No supply chains = no parts = no restart
-        - ❌ Capital reserves exhausted on emergency response
-        - ❌ Interstate/international coordination impossible
+        - [FAILED] Transformer replacement requires power (can't manufacture offline)
+        - [FAILED] No supply chains = no parts = no restart
+        - [FAILED] Capital reserves exhausted on emergency response
+        - [FAILED] Interstate/international coordination impossible
         """)
 
     st.divider()
 
-    st.subheader("⚠️ Key Insight: This Is a Bifurcation, Not Gradual Decline")
+    st.subheader("[WARNING] Key Insight: This Is a Bifurcation, Not Gradual Decline")
 
     st.markdown("""
     **Why it's not just "more of the same":**
@@ -2655,7 +2655,7 @@ def section_bifurcation_point():
     - Post-bifurcation (2030+): System locked into path; recovery impossible
     """)
 
-    st.subheader("📈 System State Over Time")
+    st.subheader("[UP] System State Over Time")
 
     # Simplified timeline visualization
     timeline_data = {
@@ -2696,9 +2696,9 @@ def section_bifurcation_point():
     fig.update_xaxes(gridcolor='#333333')
     fig.update_yaxes(gridcolor='#333333')
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
-    st.subheader("🎯 Decision Point: Now")
+    st.subheader("[TARGET] Decision Point: Now")
 
     st.markdown("""
     **The intervention window is 2-4 years.**
@@ -2745,28 +2745,28 @@ def execute_routine(script_name, routine_name):
         )
 
         if result.returncode == 0:
-            st.success(f"✅ {routine_name} completed successfully")
+            st.success(f"[OK] {routine_name} completed successfully")
             with st.expander("Show execution output"):
                 st.code(result.stdout, language="text")
         else:
-            st.error(f"⚠️ {routine_name} completed with errors")
+            st.error(f"[WARNING] {routine_name} completed with errors")
             with st.expander("Show error output"):
                 st.code(result.stderr, language="text")
 
     except subprocess.TimeoutExpired:
-        st.error(f"⏱️ {routine_name} timed out (exceeded 120 seconds)")
+        st.error(f"[TIME] {routine_name} timed out (exceeded 120 seconds)")
     except Exception as e:
         st.error(f"Error executing {routine_name}: {str(e)}")
 
 def section_routines():
     """Automated routines and scanning tasks that run in the background"""
-    st.header("🤖 Automated Routines")
+    st.header("[AI] Automated Routines")
     st.markdown("Background tasks and automation workflows designed by you, running continuously")
 
     st.subheader("Active Routines")
 
     # Routine 0: Hourly News Headline Scan (first in sequence)
-    st.write("### 📰 Routine 0: Hourly News Headline Scan")
+    st.write("### [NEWS] Routine 0: Hourly News Headline Scan")
     col1, col2, col3 = st.columns([2, 1, 1])
     with col1:
         st.write("**Early Warning Monitoring**")
@@ -2788,7 +2788,7 @@ def section_routines():
 
     **Cascade Value:** Provides near-real-time detection of infrastructure failures with goal-aligned signal extraction. Single infrastructure incident cascades across dependent systems within hours. Hourly execution ensures rapid response to emerging events.
 
-    **Status:** ✅ Active (Cloud-Based)
+    **Status:** [OK] Active (Cloud-Based)
     - Script: `import_daily_news_headlines.py`
     - Trigger ID: `trig_01HmVDUDEhoHKiTXuRFc2tT7`
     - Scheduler: Cloud-based scheduled trigger (Streamlit Cloud infrastructure)
@@ -2798,7 +2798,7 @@ def section_routines():
 
     col1, col2, col3 = st.columns([3, 1, 1])
     with col2:
-        if st.button("▶️ Run Now", key="run_routine_0"):
+        if st.button("[PLAY] Run Now", key="run_routine_0"):
             execute_routine("import_daily_news_headlines.py", "Daily News Headline Scan")
     with col3:
         st.write("")
@@ -2829,7 +2829,7 @@ def section_routines():
 
     **Cascade Value:** Analyzes comprehensive email research from any source (Substack, work emails, newsletters, etc.), extracting goal-aligned insights without manual work. Hourly execution captures email-based signals rapidly. Tracks analyzed messages by native Message-ID to prevent reprocessing.
 
-    **Status:** ✅ Active (Cloud-Based)
+    **Status:** [OK] Active (Cloud-Based)
     - Script: `import_substack_imap.py` (refactored for all Gmail, goal-driven analysis)
     - Trigger ID: `trig_01YbWBpv2WKn11vpGryYyVSh`
     - Scheduler: Cloud-based scheduled trigger (Streamlit Cloud infrastructure)
@@ -2840,7 +2840,7 @@ def section_routines():
 
     col1, col2, col3 = st.columns([3, 1, 1])
     with col2:
-        if st.button("▶️ Run Now", key="run_routine_1"):
+        if st.button("[PLAY] Run Now", key="run_routine_1"):
             execute_routine("import_substack_imap.py", "Gmail Message Analysis")
     with col3:
         st.write("")
@@ -2848,7 +2848,7 @@ def section_routines():
     st.divider()
 
     # Routine 2: Daily Institutional Data Import
-    st.write("### 🏛️ Routine 2: Daily Institutional Research Data Synthesis")
+    st.write("### [INSTITUTION] Routine 2: Daily Institutional Research Data Synthesis")
     col1, col2, col3 = st.columns([2, 1, 1])
     with col1:
         st.write("**Institutional APIs**")
@@ -2876,7 +2876,7 @@ def section_routines():
     - Infrastructure data → System brittleness tracking
     - Institutional coordination gaps → System failure nodes
 
-    **Status:** ✅ Active (Cloud-Based)
+    **Status:** [OK] Active (Cloud-Based)
     - Script: `import_institutional_data.py` (goal-driven analysis)
     - Trigger ID: `trig_01L8Ur1o577cLjUvpjcd2Jye`
     - Scheduler: Cloud-based scheduled trigger (Streamlit Cloud infrastructure)
@@ -2886,7 +2886,7 @@ def section_routines():
 
     col1, col2, col3 = st.columns([3, 1, 1])
     with col2:
-        if st.button("▶️ Run Now", key="run_routine_2"):
+        if st.button("[PLAY] Run Now", key="run_routine_2"):
             execute_routine("import_institutional_data.py", "Institutional Data Import")
     with col3:
         st.write("")
@@ -2894,7 +2894,7 @@ def section_routines():
     st.divider()
 
     # Routine 3: Daily Critical Infrastructure Monitoring
-    st.write("### 🌍 Routine 3: Daily Critical Infrastructure Monitoring")
+    st.write("### [WORLD] Routine 3: Daily Critical Infrastructure Monitoring")
     col1, col2, col3 = st.columns([2, 1, 1])
     with col1:
         st.write("**Global Infrastructure Data**")
@@ -2923,7 +2923,7 @@ def section_routines():
     - Fertilizer availability → Agricultural production node
     - Port disruptions → Infrastructure cascade node
 
-    **Status:** ✅ Active (Cloud-Based)
+    **Status:** [OK] Active (Cloud-Based)
     - Script: `import_daily_infrastructure.py` (goal-driven analysis)
     - Trigger ID: `trig_01MLpaPuRBMcL7RgXo7qgucW`
     - Scheduler: Cloud-based scheduled trigger (Streamlit Cloud infrastructure)
@@ -2933,7 +2933,7 @@ def section_routines():
 
     col1, col2, col3 = st.columns([3, 1, 1])
     with col2:
-        if st.button("▶️ Run Now", key="run_routine_3"):
+        if st.button("[PLAY] Run Now", key="run_routine_3"):
             execute_routine("import_daily_infrastructure.py", "Daily Infrastructure Monitoring")
     with col3:
         st.write("")
@@ -2948,7 +2948,7 @@ def section_routines():
         "Frequency": ["Daily", "Weekly"],
         "Time": ["08:00 AM", "Monday 10:00 AM"],
         "Sources": ["10 Substack researchers", "5 institutional APIs"],
-        "Status": ["✅ Active", "✅ Ready"]
+        "Status": ["[OK] Active", "[OK] Ready"]
     }
 
     col1, col2 = st.columns([3, 1])
@@ -2956,10 +2956,10 @@ def section_routines():
         st.markdown("""
         | Routine | Frequency | Time | Sources | Status |
         |---------|-----------|------|---------|--------|
-        | News Headline Scan | Hourly | :24 past hour | Multi-source news | ✅ Cloud-Based |
-        | Gmail Message Analysis | Hourly | :48 past hour | All Gmail folders | ✅ Cloud-Based |
-        | Infrastructure Monitoring | Daily | 09:00 AM UTC | FAO, markets, ports, water | ✅ Cloud-Based |
-        | Institutional Data | Daily | 09:00 AM UTC | 5 institutional APIs | ✅ Cloud-Based |
+        | News Headline Scan | Hourly | :24 past hour | Multi-source news | [OK] Cloud-Based |
+        | Gmail Message Analysis | Hourly | :48 past hour | All Gmail folders | [OK] Cloud-Based |
+        | Infrastructure Monitoring | Daily | 09:00 AM UTC | FAO, markets, ports, water | [OK] Cloud-Based |
+        | Institutional Data | Daily | 09:00 AM UTC | 5 institutional APIs | [OK] Cloud-Based |
         """)
 
     with col2:
